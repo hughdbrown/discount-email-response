@@ -23,7 +23,9 @@ def is_discount_request(content) -> bool:
 def generate(data: str) -> DiscountRequest:
     return client.chat.completions.create(
         # model="gpt-3.5-turbo-0613",
-        model="gpt-3.5-turbo",
+        # model="gpt-3.5-turbo",
+        # model="gpt-4o",
+        model="gpt-4o-mini",
         response_model=DiscountRequest,
         messages=[
             {
