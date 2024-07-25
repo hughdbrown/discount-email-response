@@ -1,0 +1,5 @@
+__pycache__/
+credentials.json
+*.json
+*secret*
+*.pickle
