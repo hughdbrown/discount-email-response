@@ -15,7 +15,6 @@ from discount import (
     is_discount_request_ai,
     extract_info,
 )
-from dotenv import load_dotenv
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
@@ -94,7 +93,6 @@ def generated_response(name, reason, sender):
 
 
 def main():
-    load_dotenv()
     service = get_gmail_service()
     messages = get_emails(service)
     
