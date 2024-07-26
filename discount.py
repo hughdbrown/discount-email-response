@@ -11,13 +11,14 @@ client = instructor.from_openai(OpenAI())
 class DiscountRequest(BaseModel):
     is_discount: bool = Field(..., description="Whether the user is requesting a discount or not")
     reason: str = Field(..., description="Simple summary of why the user wants a discount")
-    ai_reason: str = Field(..., description="Excerpt from the email that supports the conclusion that the user wants a discount")
+    ai_reason: str = Field(
+        ..., description="Excerpt from the email that supports the conclusion that the user wants a discount"
+    )
 
 
 def generate(data: str) -> DiscountRequest:
     system_prompt = (
-        "The following is an email from a user. "
-        "The user may be asking for a discount on the price of a course.",
+        "The following is an email from a user. The user may be asking for a discount on the price of a course.",
     )
     user_prompt = (
         "Create the DiscountRequest for the following email:\n"
@@ -63,11 +64,7 @@ def is_discount_request_ai(content) -> bool:
 def extract_info(sender, content):
     name = re.search(r'(?:^|\s)([A-Z][a-z]+ [A-Z][a-z]+)', sender)
     name = name.group(1) if name else "Customer"
- 
+
     email = re.search(r'[\w\.-]+@[\w\.-]+', sender).group(0)
- 
-    # reason = re.search(r'(?i)(?:because|reason|why).*?([^.!?]+[.!?])', content)
-    # reason = reason.group(1).strip() if reason else "No specific reason provided."
-    #
-    #return name, email, reason
+
     return name, email
