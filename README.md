@@ -17,8 +17,7 @@ Write some code that I can plug into my gmail account (so that the code automati
 pyenv virtualenv 3.12.0 discount
 pyenv activate discount
 
-# Run the code
-./discount-email-response.py
+pip install -r requirements.txt
 ```
 
 2. Set Up Gmail API
@@ -27,3 +26,8 @@ pyenv activate discount
 * Enable the Gmail API for your project.
 * Create credentials for a Desktop application.
 * Download the credentials file (`credentials.json`).
+
+3. Run the code
+```
+./discount-email-response.py
+```
