@@ -105,7 +105,9 @@ def generated_response(name, reason, sender):
 
 
 def main():
+    assert environ["OPEN_AI_SECRET"]
     service = get_gmail_service()
+    assert service is not None
     messages = get_emails(service)
     logger.info(f"{len(messages)} messages")
 
