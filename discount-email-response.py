@@ -66,12 +66,12 @@ def get_email_content(service, msg_id):
     subject = next(header['value'] for header in headers if header['name'] == 'Subject')
     sender = next(header['value'] for header in headers if header['name'] == 'From')
 
-    if 'parts' in payload:
-        parts = payload['parts']
-        data = parts[0]['body']['data']
+    if (parts := payload.get('parts')):
+        body = parts[0]['body']
     else:
-        data = payload['body']['data']
+        body = payload['body']
 
+    data = body.get('data', "")
     content = base64.urlsafe_b64decode(data).decode('utf-8')
 
     return subject, sender, content

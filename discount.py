@@ -75,5 +75,5 @@ def extract_info(sender, content):
     name = name.group(1) if name else "Customer"
 
     email = re.search(r'[\w\.-]+@[\w\.-]+', sender).group(0)
-    logger.info(f"extract info: {sender = } {content = }")
+    logger.info(f"extract info: {sender = } {content[:100] = }")
     return name, email
