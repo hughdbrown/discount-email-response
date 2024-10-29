@@ -2,6 +2,8 @@
 
 from email.mime.text import MIMEText
 import base64
+import logging
+from os import environ
 import pickle
 from pathlib import Path
 
@@ -19,8 +21,13 @@ from discount import (
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 
+FORMAT = '%(asctime)s %(levelname)s %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.INFO, datefmt="%Y-%m-%dT%H:%MM:%S")
+logger = logging.getLogger()
+
 
 def get_creds():
+    logger.info("Getting credentials")
     token_path = Path('token.pickle')
     creds = None
     if token_path.exists():
@@ -38,17 +45,20 @@ def get_creds():
 
 
 def get_gmail_service():
+    logger.info("Getting Gmail service")
     creds = get_creds()
     service = build('gmail', 'v1', credentials=creds)
     return service
 
 
 def get_emails(service):
+    logger.info("Getting emails using Gmail service")
     results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
     return results.get('messages', [])
 
 
 def get_email_content(service, msg_id):
+    logger.info(f"Getting email {msg_id}")
     message = service.users().messages().get(userId='me', id=msg_id, format='full').execute()
     payload = message['payload']
     headers = payload['headers']
@@ -68,6 +78,7 @@ def get_email_content(service, msg_id):
 
 
 def create_draft_response(service, to, subject, body):
+    logger.info(f"Creating Draft response for {to}")
     message = MIMEText(body)
     message['to'] = to
     message['subject'] = subject
@@ -79,6 +90,7 @@ def create_draft_response(service, to, subject, body):
 
 
 def generated_response(name, reason, sender):
+    logger.info(f"Generating response for reason: {reason}")
     env = Environment(
         loader=PackageLoader("discount-email-response"),
         autoescape=select_autoescape(),
@@ -95,6 +107,7 @@ def generated_response(name, reason, sender):
 def main():
     service = get_gmail_service()
     messages = get_emails(service)
+    logger.info(f"{len(messages)} messages")
 
     for message in messages:
         msg_id = message['id']
@@ -107,7 +120,9 @@ def main():
             print(f"Exception: {exc}")
         else:
             if request.is_discount:
-                print(f"This supports the idea that a discount is requested: {request.ai_reason}")
+                logger.info(
+                    f"This supports the idea that a discount is requested: {request.ai_reason}"
+                )
                 name, email = extract_info(sender, content)
                 response_body = generated_response(name, request.reason, sender)
                 create_draft_response(service, email, f"Re: {subject}", response_body)
