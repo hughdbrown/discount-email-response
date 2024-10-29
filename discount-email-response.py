@@ -111,15 +111,15 @@ def main():
     messages = get_emails(service)
     logger.info(f"{len(messages)} messages")
 
-    for message in messages:
+    for i, message in enumerate(messages):
         msg_id = message['id']
-        print(f"{'-' * 30} {msg_id}")
+        logger.info(f"{'-' * 30} {i}/{len(messages)} {msg_id}")
         subject, sender, content = get_email_content(service, msg_id)
 
         try:
             request = is_discount_request_ai(content)
-        except Exception as exc:
-            print(f"Exception: {exc}")
+        except Exception:
+            logger.exception("??")
         else:
             if request.is_discount:
                 logger.info(
