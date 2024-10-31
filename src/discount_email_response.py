@@ -1,12 +1,12 @@
 
-from email.mime.text import MIMEText
 import base64
 import pickle
+from email.mime.text import MIMEText
 from pathlib import Path
 
+from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from google.auth.transport.requests import Request
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from . import logger

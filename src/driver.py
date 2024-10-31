@@ -9,8 +9,8 @@ from .discount import (
 from .discount_email_response import (
     create_draft_response,
     generated_response,
-    get_emails,
     get_email_content,
+    get_emails,
     get_gmail_service,
 )
 
