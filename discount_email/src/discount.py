@@ -4,7 +4,7 @@ import instructor
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-from . import logger
+from discount_email.src.logger import logger
 
 client = instructor.from_openai(OpenAI())
 

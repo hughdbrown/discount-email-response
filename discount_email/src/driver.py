@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 from os import environ
 
-from . import logger
-from .discount import (
+from discount_email.src.discount import (
     extract_info,
     is_discount_request_ai,
 )
-from .discount_email_response import (
+from discount_email.src.discount_email_response import (
     create_draft_response,
     generated_response,
     get_email_content,
     get_emails,
     get_gmail_service,
 )
+from discount_email.src.logger import logger
 
 
 def main():

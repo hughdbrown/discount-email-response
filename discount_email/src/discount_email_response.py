@@ -9,7 +9,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from . import logger
+from discount_email.src.logger import logger
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
@@ -81,7 +81,7 @@ def create_draft_response(service, to, subject, body):
 def generated_response(name, reason, sender):
     logger.info(f"Generating response for reason: {reason}")
     env = Environment(
-        loader=PackageLoader("discount-email-response"),
+        loader=PackageLoader("discount_email_response"),
         autoescape=select_autoescape(),
     )
     template = env.get_template("discount.html")
