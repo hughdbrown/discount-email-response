@@ -17,7 +17,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
 
 def get_creds():
     logger.info("Getting credentials")
-    token_path = Path('token.pickle')
+    token_path = Path('..', 'token.pickle')
     creds = None
     if token_path.exists():
         with token_path.open('rb') as token:
