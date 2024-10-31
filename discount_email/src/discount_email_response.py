@@ -81,7 +81,7 @@ def create_draft_response(service, to, subject, body):
 def generated_response(name, reason, sender):
     logger.info(f"Generating response for reason: {reason}")
     env = Environment(
-        loader=PackageLoader("discount_email_response"),
+        loader=PackageLoader("discount_email.src.discount_email_response"),
         autoescape=select_autoescape(),
     )
     template = env.get_template("discount.html")
