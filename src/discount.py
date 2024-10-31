@@ -1,16 +1,12 @@
-import logging
 import re
 
 import instructor
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
+from . import logger
 
 client = instructor.from_openai(OpenAI())
-
-FORMAT = '%(asctime)s %(levelname)s %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.INFO, datefmt="%Y-%m-%dT%H:%MM:%S")
-logger = logging.getLogger()
 
 
 class DiscountRequest(BaseModel):
@@ -63,9 +59,7 @@ def generate(data: str) -> DiscountRequest:
 
 
 def is_discount_request_ai(content) -> bool:
-    global client
-
-    logging.info("Checking email for whether it is a discount request")
+    logger.info("Checking email for whether it is a discount request")
     assert client
     return generate(content)
 

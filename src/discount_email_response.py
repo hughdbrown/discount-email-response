@@ -2,8 +2,6 @@
 
 from email.mime.text import MIMEText
 import base64
-import logging
-from os import environ
 import pickle
 from pathlib import Path
 
@@ -12,18 +10,10 @@ from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from discount import (
-    # is_discount_request,
-    is_discount_request_ai,
-    extract_info,
-)
+from . import logger
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.modify']
-
-FORMAT = '%(asctime)s %(levelname)s %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.INFO, datefmt="%Y-%m-%dT%H:%MM:%S")
-logger = logging.getLogger()
 
 
 def get_creds():
