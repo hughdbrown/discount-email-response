@@ -40,10 +40,9 @@ def generate(data: str) -> DiscountRequest:
     )
 
     return client.chat.completions.create(
-        # model="gpt-3.5-turbo-0613",
-        # model="gpt-3.5-turbo",
-        # model="gpt-4o",
-        model="gpt-4o-mini",
+        model="gpt-4o",
+        # gpt-4o-mini is less expensive, but it does not reliably categorize emails correctly
+        # model="gpt-4o-mini",
         response_model=DiscountRequest,
         messages=[
             {
