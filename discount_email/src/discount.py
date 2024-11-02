@@ -19,19 +19,20 @@ class DiscountRequest(BaseModel):
 
 def generate(data: str) -> DiscountRequest:
     system_prompt = (
-        "The following is an email from a user. The user may be asking for a discount on the price of a course.",
-    )
-    user_prompt = (
-        "Create the DiscountRequest for the following email:\n"
-        "-----\n"
-        f"{data}\n"
-        "-----\n"
+        "Please analyze the following email from a user. The user may be asking for a discount on the price of a course.\n"
+        "We don't care if the user is offering a discount.\n"
         "These are not discount requests:\n"
         "- political donation solicitations\n"
         "- anything mentioning Donald Trump or Kamala Harris\n"
         "- offers to sell some item (including subscriptions, homes, books, stock services)\n"
         "- offers to give away some item\n"
         "- offers of a discount\n"
+    )
+    user_prompt = (
+        "Create the DiscountRequest for the following email:\n"
+        "-----\n"
+        f"{data}\n"
+        "-----\n"
         "If the email includes a request for a discount, then: \n"
         "- set is_discount to True\n"
         "- use the reason field to summarize briefly the user's reason for wanting the discount\n"
