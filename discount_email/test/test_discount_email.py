@@ -142,6 +142,19 @@ P.S. Stay tuned for more spooktacular flash sales this week!
 subscriber_text = "Latest articles\nIf you’re not a subscriber, here’s what you missed this month."
 
 
+scale_up_ai_text = """
+Join Insight Partners at ScaleUp:AI
+ScaleUp:AI just released passes for their developer-focused conference.
+
+Top engineers from Google, Meta, Bardeen, Writer, and Databricks present technical deep-dives on AI implementation and deployment.
+
+The program covers AI systems architecture, adoption frameworks, and industry-specific optimization.
+
+Virtual attendees get direct access to a Q&A session with Andrew Ng, pioneering ML researcher.
+
+Get virtual access now: $99 with code Alpha99 for AlphaSignal readers (regular price $159).
+"""
+
 # Fixtures
 
 @pytest.fixture
@@ -203,7 +216,12 @@ def matt_harrison2():
 def subscriber():
    return subscriber_text
 
- 
+
+@pytest.fixture
+def scaleup_ai():
+   return scale_up_ai_text
+
+
 # Tests
 
 def test_subscriber_no_discount_request(subscriber):
@@ -262,5 +280,10 @@ def test_udacity_no_discount_request(udacity):
 
 
 def test_manning_no_discount_request(manning):
+    request = is_discount_request_ai(manning)
+    assert not request.is_discount
+
+
+def test_scaleup_ai_no_discount_request(scaleup_ai):
     request = is_discount_request_ai(manning)
     assert not request.is_discount
